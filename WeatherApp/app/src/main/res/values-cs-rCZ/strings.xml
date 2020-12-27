@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- WelcomeActivity -->
+    <string name="settings_dialog_title">Vyžadováná oprávnění</string>
+    <string name="settings_dialog_text">Pro správné fungování aplikace je nutné oprávnění o zjištění polohy</string>
+    <string name="error_location">Chyba při zjišťování polohy</string>
+    <string name="permissions_dialog_text">Tato aplikace vyžaduje přístup k poloze zařízení, aby mohla poskytnout aktuální předpověď počasí</string>
+
+    <!-- Connection -->
+    <string name="no_connection_dialog_text">Připojení k internetu není k dispozici</string>
+    <string name="close">Ukončit</string>
+
+    <!-- MainActivity -->
+    <string name="error_new_location">Chyba při vyhledání nové polohy</string>
+
+    <!-- MainActivity layout -->
+    <string name="feels_like">Pocitová teplota</string>
+    <string name="humidity">Vlhkost vzduchu</string>
+    <string name="wind_speed">Rychlost větru</string>
+    <string name="wind_direction">Směr větru</string>
+    <string name="sunrise">Východ slunce</string>
+    <string name="sunset">Západ slunce</string>
+    <string name="moon_phase">Měsíční fáze</string>
+
+    <!-- WeatherData -->
+    <string name="error_current_weather">Chyba při zpracování aktuální předpovědi počasí</string>
+    <string name="error_hourly_weather">Chyba při zpracování hodinové předpovědi počasí</string>
+    <string name="error_daily_weather">Chyba při zpracování denní předpovědi počasí</string>
+    <string name="error_server_connection">Chyba při připojování k serveru</string>
+
+    <!-- Settings -->
+    <string name="settings">Nastavení</string>
+    <string name="language">Jazyk</string>
+    <string name="language_select_dialog">Vyberte jazyk</string>
+    <string name="temperature_unit">Jednotka teploty</string>
+    <string name="temperature_unit_select_dialog">Vyberte jednotku teploty</string>
+    <string name="speed_unit">Jednotka rychlosti</string>
+    <string name="speed_unit_select_dialog">Vyberte jednotku rychlosti</string>
+    <string name="forecast_mode">Režim předpovědi</string>
+    <string name="forecast_mode_select_dialog">Vyberte režim předpovědi</string>
+    <string name="hours">hodin</string>
+
+    <!-- Resources -->
+    <string name="clear">Jasno</string>
+    <string name="mostly_clear">Převážně jasno</string>
+    <string name="cloudy">Zataženo</string>
+    <string name="partly_cloudy">Polojasno</string>
+    <string name="mostly_cloudy">Převážně zataženo</string>
+    <string name="fog">Mlha</string>
+    <string name="fog_light">Místy mlha</string>
+    <string name="drizzle">Přeháňky</string>
+    <string name="rain_light">Slabý déšť</string>
+    <string name="rain">Déšť</string>
+    <string name="rain_heavy">Silný déšť</string>
+    <string name="tstorm">Bouřky</string>
+    <string name="snow_light">Slabé sněžení</string>
+    <string name="snow">Sněžení</string>
+    <string name="flurries">Poryv větru</string>
+    <string name="snow_heavy">Silné sněžení</string>
+    <string name="ice_pellets_light">Ledovka</string>
+    <string name="ice_pellets">Náledí</string>
+    <string name="ice_pellets_heavy">Námraza</string>
+    <string name="freezing_drizzle">Mrznoucí přeháňky</string>
+    <string name="freezing_rain_light">Mrznoucí slabý déšť</string>
+    <string name="freezing_rain">Mrznoucí déšť</string>
+    <string name="freezing_rain_heavy">Silný mrznoucí déšť</string>
+    <string name="north">Severní</string>
+    <string name="east">Východní</string>
+    <string name="south">Jižní</string>
+    <string name="west">Západní</string>
+
+</resources>
