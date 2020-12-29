@@ -46,17 +46,20 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class WelcomeActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
     
+    // Kód pro oprávnění polohy
+    private final int PERMISSION_LOCATION_REQUEST_CODE = 999;
+    
     private WeatherData weatherData;
     private ImageSwitcher imageSwitcher;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private AppStorage appStorage;
-    
-    // Kód pro oprávnění polohy
-    private final int PERMISSION_LOCATION_REQUEST_CODE = 999;
 
     // True - aplikace zastavena
     // False - aplikace běží
     private boolean isStop;
+    
+    // Denní / Noční režim
+    private boolean isDay;
     
     // Pole obrázků pro úvodní animaci
     private int[] images;
@@ -174,10 +177,14 @@ public class WelcomeActivity extends AppCompatActivity implements EasyPermission
 
         // Denní režim
         if (hour >= 6 && hour <= 18) {
+            
+            isDay = true;
             images = new int[] {R.drawable.clear, R.drawable.partly_cloudy, R.drawable.cloudy, R.drawable.rain, R.drawable.tstorm, R.drawable.snow_heavy};
 
         // Noční režim
         } else {
+            
+            isDay = false;
             images = new int[] {R.drawable.clear_night, R.drawable.partly_cloudy_night, R.drawable.cloudy, R.drawable.rain, R.drawable.tstorm, R.drawable.snow_heavy};
         }
 
@@ -256,6 +263,7 @@ public class WelcomeActivity extends AppCompatActivity implements EasyPermission
                     List<WeatherDataDaily> weatherDataDailyList = weatherData.getWeatherDataDailyList();
                     
                     Intent mainActivity = new Intent(WelcomeActivity.this, MainActivity.class);
+                    mainActivity.putExtra("isDay", isDay);
                     mainActivity.putExtra("location", location);
                     mainActivity.putExtra("weatherDataCurrent", weatherDataCurrent);
                     mainActivity.putExtra("weatherDataHourlyList", (Serializable) weatherDataHourlyList);

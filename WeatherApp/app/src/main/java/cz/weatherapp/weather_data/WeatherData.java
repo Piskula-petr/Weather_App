@@ -240,13 +240,8 @@ public class WeatherData {
 				int day = calendar.get(Calendar.DAY_OF_MONTH);
 				int hour = calendar.get(Calendar.HOUR_OF_DAY);
 				
-				// Přidání nuly, při jednociferném čísle
-				String twoDigitsHour = (hour < 10)
-						? "0" + hour
-						: String.valueOf(hour);
-				
 				// Konečné datum
-				String endTime = year + "-" + month + "-" + day + "T" + twoDigitsHour + ":00:00Z";
+				String endTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T" + twoDigitsFormatter(hour) + ":00:00Z";
 				
 				String url = "https://api.climacell.co/v3/weather/forecast/hourly" +
 						"?lat=" + latitude + "" +
@@ -344,7 +339,7 @@ public class WeatherData {
 				int day = calendar.get(Calendar.DAY_OF_MONTH);
 				
 				// Počáteční datum
-				String startTime = year + "-" + month + "-" + day + "T00:00:00Z";
+				String startTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T00:00:00Z";
 				
 				// Posun o 3 dny
 				calendar.add(Calendar.DAY_OF_MONTH, 3);
@@ -354,7 +349,7 @@ public class WeatherData {
 				day = calendar.get(Calendar.DAY_OF_MONTH);
 				
 				// Konečné datum
-				String endTime = year + "-" + month + "-" + day + "T00:00:00Z";
+				String endTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T00:00:00Z";
 				
 				String url = "https://api.climacell.co/v3/weather/forecast/daily" +
 						"?lat=" + latitude +
@@ -439,5 +434,22 @@ public class WeatherData {
 		public List<WeatherDataDaily> getWeatherDataDailyList() {
 				return weatherDataDailyList;
 		}
+
+
+		/**
+		* Převod čísla na dvouciferný formát [1 -> "01"]
+		*
+		* @param number - vstupní číslo
+		*
+		* @return - vrací dvouciferný String
+		*/
+		private String twoDigitsFormatter(int number) {
 		
+				String twoDigits = (number < 10
+							? twoDigits = "0" + number
+							: String.valueOf(number));
+				
+				return twoDigits;
+		}
+
 }

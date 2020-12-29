@@ -30,6 +30,9 @@
     <string name="error_daily_weather">Chyba při zpracování denní předpovědi počasí</string>
     <string name="error_server_connection">Chyba při připojování k serveru</string>
 
+    <!-- WeatherTypes -->
+    <string name="weather_types">Typy počasí</string>
+
     <!-- Settings -->
     <string name="settings">Nastavení</string>
     <string name="language">Jazyk</string>
@@ -57,7 +60,7 @@
     <string name="tstorm">Bouřky</string>
     <string name="snow_light">Slabé sněžení</string>
     <string name="snow">Sněžení</string>
-    <string name="flurries">Poryv větru</string>
+    <string name="flurries">Poryvy větru</string>
     <string name="snow_heavy">Silné sněžení</string>
     <string name="ice_pellets_light">Ledovka</string>
     <string name="ice_pellets">Náledí</string>

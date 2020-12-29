@@ -54,14 +54,13 @@ public class MainActivity extends AppCompatActivity {
     
     private final String GOOGLE_API_KEY = BuildConfig.GOOGLE_API_KEY;
     
+    // Kód výsledku změny polohy
+    private final int LOCATION_REQUEST_CODE = 999;
+    
     private RelativeLayout relativeLayoutHourly;
     private WeatherData weatherData;
     private AppStorage appStorage;
-    
     private EditText editTextLocation;
-    
-    // Kód výsledku změny polohy
-    private final int LOCATION_REQUEST_CODE = 999;
     
     // Data o počasí
     private WeatherDataCurrent weatherDataCurrent = new WeatherDataCurrent();
@@ -102,7 +101,23 @@ public class MainActivity extends AppCompatActivity {
         
         // Skrytí panelu akcí
         getSupportActionBar().hide();
+    
+        isDay = getIntent().getBooleanExtra("isDay", true);
         
+        // Přesměrování na typy počasí
+        Button buttonWeatherTypes = findViewById(R.id.buttonWeatherTypes);
+        buttonWeatherTypes.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                
+                Intent weatherTypes = new Intent(MainActivity.this, WeatherTypesActivity.class);
+                weatherTypes.putExtra("isDay", isDay);
+                
+                startActivity(weatherTypes);
+            }
+        });
+
         // Přesměrování do nastavení aplikace
         Button buttonSettings = findViewById(R.id.buttonSettings);
         buttonSettings.setOnClickListener(new View.OnClickListener() {
@@ -120,17 +135,6 @@ public class MainActivity extends AppCompatActivity {
     
         // Změna jazyka aplikace + uložení nastavení
         appStorage.setAndSaveLocale(Locale.getDefault().getLanguage());
-        
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        
-        // Denní režim
-        if (hour >= 6 && hour <= 18) {
-            
-            isDay = true;
-            
-        // Noční režim
-        } else isDay = false;
     
         // Nastavení zdrojů
         Resources resources = new Resources(getApplicationContext());
@@ -199,6 +203,8 @@ public class MainActivity extends AppCompatActivity {
         textViewSunriseLabel.setText(getString(R.string.sunrise) + " :");
         
         TextView textViewSunrise = findViewById(R.id.textViewSunrise);
+        
+        Calendar calendar = Calendar.getInstance();
         calendar = weatherDataCurrent.getSunrise();
         textViewSunrise.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
         
@@ -226,13 +232,13 @@ public class MainActivity extends AppCompatActivity {
         
         relativeLayoutHourly = findViewById(R.id.relativeLayoutHourly);
         relativeLayoutHourly.setPadding(10, 0, 10, 40);
+    
+        LayoutParams layoutParams = new LayoutParams(250, 450);
         
         for (int i = 0; i < weatherDataHourlyList.size(); i++) {
     
             WeatherDataHourly weatherDataHourly = weatherDataHourlyList.get(i);
-
-            LayoutParams layoutParams = new LayoutParams(250, 450);
-
+            
             // Čas měření
             TextView textViewHourlyTime = new TextView(this);
             calendar = weatherDataHourly.getObservationTime();
@@ -444,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
                         List<WeatherDataDaily> weatherDataDailyList = weatherData.getWeatherDataDailyList();
 
                         Intent mainActivity = new Intent(MainActivity.this, MainActivity.class);
+                        mainActivity.putExtra("isDay", isDay);
                         mainActivity.putExtra("location", location);
                         mainActivity.putExtra("weatherDataCurrent", weatherDataCurrent);
                         mainActivity.putExtra("weatherDataHourlyList", (Serializable) weatherDataHourlyList);

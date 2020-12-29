@@ -2,7 +2,10 @@ package cz.weatherapp;
 
 import android.content.Context;
 
+import androidx.core.widget.RichContentReceiverCompat;
+
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Resources {
@@ -22,10 +25,7 @@ public class Resources {
 		
 		
 		/**
-		 * Vytvoření Mapy předpovědí počasí: <br>
-		 *
-		 * klíč - kód předpovědi z API serveru <br>
-		 * hodnota - slovně předpověď počasí
+		 * Vytvoření Mapy předpovědí počasí - [kódový název, ID popisu]
 		 *
 		 * @return - vrací Mapu předpovědi počasí
 		 */
@@ -62,10 +62,7 @@ public class Resources {
 		
 		
 		/**
-		 * Vytvoření Mapy obrázků předpovědi počasí: <br>
-		 *
-		 * klíč - kód předpovědi z API serveru <br>
-		 * hodnota - ID obrázku
+		 * Vytvoření Mapy obrázků předpovědi počasí - [kódový název, ID popisku]
 		 *
 		 * @param isDay - boolean noční / denní obrázky
 		 *
@@ -114,10 +111,62 @@ public class Resources {
 		
 		
 		/**
-		 * Vytvoření Mapy obrázků měsíčních fází: <br>
+		 * Vytvoření Mapy typů počasí - [ID obrázku, popis obrázku]
 		 *
-		 * klíč - kód z API serveru <br>
-		 * hodnota - ID obrázku
+		 * @return - vrací Mapu typů počasí
+		 */
+		public Map<Integer, String> getWeatherTypes(boolean isDay) {
+				
+				Map<Integer, String> weatherTypes = new LinkedHashMap<>();
+				
+				// Denní režim
+				if (isDay) {
+						weatherTypes.put(R.drawable.clear, context.getString(R.string.clear));
+						weatherTypes.put(R.drawable.mostly_clear, context.getString(R.string.mostly_clear));
+						weatherTypes.put(R.drawable.partly_cloudy, context.getString(R.string.partly_cloudy));
+						
+						// Noční režim
+				} else {
+						weatherTypes.put(R.drawable.clear, context.getString(R.string.clear));
+						weatherTypes.put(R.drawable.mostly_clear, context.getString(R.string.mostly_clear));
+						weatherTypes.put(R.drawable.partly_cloudy, context.getString(R.string.partly_cloudy));
+				}
+				
+				weatherTypes.put(R.drawable.cloudy, context.getString(R.string.mostly_cloudy) +
+						"\n" + context.getString(R.string.cloudy));
+				
+				weatherTypes.put(R.drawable.fog, context.getString(R.string.fog_light) +
+						"\n" + context.getString(R.string.fog));
+				
+				weatherTypes.put(R.drawable.flurries, context.getString(R.string.flurries));
+				weatherTypes.put(R.drawable.drizzle, context.getString(R.string.drizzle));
+				weatherTypes.put(R.drawable.rain_light, context.getString(R.string.rain_light));
+				
+				weatherTypes.put(R.drawable.rain, context.getString(R.string.rain) +
+						"\n" + context.getString(R.string.rain_heavy));
+				
+				weatherTypes.put(R.drawable.tstorm, context.getString(R.string.tstorm));
+				
+				weatherTypes.put(R.drawable.ice_pellets_light, context.getString(R.string.freezing_drizzle) +
+						"\n" + context.getString(R.string.freezing_rain_light) +
+						"\n" + context.getString(R.string.ice_pellets_light));
+				
+				weatherTypes.put(R.drawable.ice_pellets, context.getString(R.string.freezing_rain) +
+						"\n" + context.getString(R.string.freezing_rain_heavy) +
+						"\n" + context.getString(R.string.ice_pellets) +
+						"\n" + context.getString(R.string.ice_pellets_heavy));
+				
+				weatherTypes.put(R.drawable.snow, context.getString(R.string.snow_light) +
+						"\n" + context.getString(R.string.snow));
+				
+				weatherTypes.put(R.drawable.snow_heavy, context.getString(R.string.snow_heavy));
+				
+				return weatherTypes;
+		}
+		
+		
+		/**
+		 * Vytvoření Mapy obrázků měsíčních fází - [kódový název, ID obrázku]
 		 *
 		 * @return - vrací Mapu obrázků měsíčních fází
 		 */

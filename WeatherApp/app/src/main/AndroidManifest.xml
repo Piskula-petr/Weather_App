@@ -36,6 +36,11 @@
             android:parentActivityName=".activities.WelcomeActivity">
         </activity>
 
-    </application>
+        <!-- Typy počasí -->
+        <activity
+            android:name=".activities.WeatherTypesActivity"
+            android:parentActivityName=".activities.WelcomeActivity">
+        </activity>
 
+    </application>
 </manifest>

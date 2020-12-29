@@ -28,22 +28,22 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
-        <ImageView
-            android:id="@+id/imageInfo"
+        <Button
+            android:id="@+id/buttonWeatherTypes"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
+            android:foreground="@drawable/info"
             app:layout_constraintBottom_toTopOf="@+id/viewMain1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/info" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@+id/buttonSettings"
-            app:layout_constraintStart_toEndOf="@+id/imageInfo"
+            app:layout_constraintStart_toEndOf="@+id/buttonWeatherTypes"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -331,9 +331,9 @@
 
         <ImageView
             android:id="@+id/imageViewMoonPhase"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="50dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineMain1"
             app:layout_constraintTop_toBottomOf="@+id/textViewSunset"
