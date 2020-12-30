@@ -9,6 +9,9 @@
     <string-array name="application_languages_codes">
         <item>cs</item>
         <item>en</item>
+        <item>ru</item>
+        <item>fr</item>
+        <item>es</item>
     </string-array>
 
     <!-- Jednotky teploty -->

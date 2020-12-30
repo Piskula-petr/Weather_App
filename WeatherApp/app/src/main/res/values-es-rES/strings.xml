@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- WelcomeActivity -->
+    <string name="settings_dialog_title">Permisos requeridos</string>
+    <string name="settings_dialog_text">Para que la aplicación funcione correctamente se requiere permiso para determinar la ubicación</string>
+    <string name="error_location">Error al determinar la ubicación</string>
+    <string name="permissions_dialog_text">Esta aplicación requiere acceso a la ubicación del dispositivo para poder proporcionar el pronóstico del tiempo actual</string>
+
+    <!-- Connection -->
+    <string name="no_connection_dialog_text">La conexión a Internet no está disponible</string>
+    <string name="close">Cerca</string>
+
+    <!-- MainActivity -->
+    <string name="error_new_location">Error al buscar una nueva ubicación</string>
+
+    <!-- MainActivity layout -->
+    <string name="feels_like">Se siente como</string>
+    <string name="humidity">Humedad</string>
+    <string name="wind_speed">Velocidad del viento</string>
+    <string name="wind_direction">Dirección del viento</string>
+    <string name="sunrise">amanecer</string>
+    <string name="sunset">Puesta de sol</string>
+    <string name="moon_phase">Fase lunar</string>
+
+    <!-- WeatherData -->
+    <string name="error_current_weather">Error al procesar el pronóstico del tiempo actual</string>
+    <string name="error_hourly_weather">Error al procesar el pronóstico del tiempo por hora</string>
+    <string name="error_daily_weather">Error al procesar la previsión meteorológica diaria</string>
+    <string name="error_server_connection">Error al conectarse al servidor</string>
+
+    <!-- WeatherTypes -->
+    <string name="weather_types">Tipos de clima</string>
+
+    <!-- Settings -->
+    <string name="settings">Configuraciones</string>
+    <string name="language">Idioma</string>
+    <string name="language_select_dialog">Seleccione el idioma</string>
+    <string name="temperature_unit">Unidad de temperatura</string>
+    <string name="temperature_unit_select_dialog">Seleccionar unidad de temperatura</string>
+    <string name="speed_unit">Unidad de velocidad</string>
+    <string name="speed_unit_select_dialog">Seleccionar unidad de velocidad</string>
+    <string name="forecast_mode">Modo de previsión</string>
+    <string name="forecast_mode_select_dialog">Seleccionar modo de pronóstico</string>
+    <string name="hours">horas</string>
+
+    <!-- Resources -->
+    <string name="clear">Claro</string>
+    <string name="mostly_clear">Mayormente claro</string>
+    <string name="partly_cloudy">Parcialmente nublado</string>
+    <string name="cloudy">Nublado</string>
+    <string name="mostly_cloudy">Mayormente nublado</string>
+    <string name="fog">Niebla</string>
+    <string name="fog_light">Niebla ligera</string>
+    <string name="drizzle">Llovizna</string>
+    <string name="rain_light">Lluvia ligera</string>
+    <string name="rain">Lluvia</string>
+    <string name="rain_heavy">Lluvia Pesada</string>
+    <string name="tstorm">Tormenta</string>
+    <string name="snow_light">Nieve ligera</string>
+    <string name="snow">Nieve</string>
+    <string name="flurries">Ráfagas de viento</string>
+    <string name="snow_heavy">Fuertes nevadas</string>
+    <string name="ice_pellets_light">Pellets de hielo ligero</string>
+    <string name="ice_pellets">Gránulos de hielo</string>
+    <string name="ice_pellets_heavy">Pellets de hielo pesado</string>
+    <string name="freezing_drizzle">Llovizna helada</string>
+    <string name="freezing_rain_light">Lluvia helada ligera</string>
+    <string name="freezing_rain">Lluvia helada</string>
+    <string name="freezing_rain_heavy">Lluvia helada intensa</string>
+    <string name="north">norte</string>
+    <string name="east">Este</string>
+    <string name="south">Sur</string>
+    <string name="west">Oeste</string>
+
+</resources>

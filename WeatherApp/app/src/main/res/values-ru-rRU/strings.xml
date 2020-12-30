@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- WelcomeActivity -->
+    <string name="settings_dialog_title">Требуются разрешения</string>
+    <string name="settings_dialog_text">Для правильной работы приложения требуется разрешение на определение местоположения</string>
+    <string name="error_location">Ошибка при определении местоположения</string>
+    <string name="permissions_dialog_text">Это приложение требует доступа к местоположению устройства, чтобы иметь возможность предоставлять текущий прогноз погоды</string>
+
+    <!-- Connection -->
+    <string name="no_connection_dialog_text">Интернет-соединение недоступно</string>
+    <string name="close">Закрыть</string>
+
+    <!-- MainActivity -->
+    <string name="error_new_location">Ошибка при поиске нового местоположения</string>
+
+    <!-- MainActivity layout -->
+    <string name="feels_like">Как будто</string>
+    <string name="humidity">Влажность</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="wind_direction">Направление ветра</string>
+    <string name="sunrise">Восход</string>
+    <string name="sunset">Закат солнца</string>
+    <string name="moon_phase">Фаза луны</string>
+
+    <!-- WeatherData -->
+    <string name="error_current_weather">Ошибка при обработке текущего прогноза погоды</string>
+    <string name="error_hourly_weather">Ошибка при обработке почасового прогноза погоды</string>
+    <string name="error_daily_weather">Ошибка при обработке ежедневного прогноза погоды</string>
+    <string name="error_server_connection">Ошибка подключения к серверу</string>
+
+    <!-- WeatherTypes -->
+    <string name="weather_types">Типы погоды</string>
+
+    <!-- Settings -->
+    <string name="settings">Настройки</string>
+    <string name="language">Язык</string>
+    <string name="language_select_dialog">Выбрать язык</string>
+    <string name="temperature_unit">Единица измерения</string>
+    <string name="temperature_unit_select_dialog">Выбор единицы</string>
+    <string name="speed_unit">Единица скорости</string>
+    <string name="speed_unit_select_dialog">Выберите единицу скорости</string>
+    <string name="forecast_mode">Режим прогноза</string>
+    <string name="forecast_mode_select_dialog">Выберите режим прогноза</string>
+    <string name="hours">часы</string>
+
+    <!-- Resources -->
+    <string name="clear">Очистить</string>
+    <string name="mostly_clear">В большей степени ясно</string>
+    <string name="partly_cloudy">Частично облачно</string>
+    <string name="cloudy">Облачно</string>
+    <string name="mostly_cloudy">В основном облачно</string>
+    <string name="fog">Туман</string>
+    <string name="fog_light">Легкий туман</string>
+    <string name="drizzle">Морось</string>
+    <string name="rain_light">Легкий дождь</string>
+    <string name="rain">Дождь</string>
+    <string name="rain_heavy">Ливень</string>
+    <string name="tstorm">Буря</string>
+    <string name="snow_light">Слабый снег</string>
+    <string name="snow">Снег</string>
+    <string name="flurries">Порывы ветра</string>
+    <string name="snow_heavy">Сильный снегопад</string>
+    <string name="ice_pellets_light">Легкие ледяные гранулы</string>
+    <string name="ice_pellets">Ледяная крупа</string>
+    <string name="ice_pellets_heavy">Тяжелые ледяные шарики</string>
+    <string name="freezing_drizzle">Изморозь</string>
+    <string name="freezing_rain_light">Легкий ледяной дождь</string>
+    <string name="freezing_rain">Ледяной дождь</string>
+    <string name="freezing_rain_heavy">Сильный ледяной дождь</string>
+    <string name="north">север</string>
+    <string name="east">Восток</string>
+    <string name="south">Юг</string>
+    <string name="west">Запад</string>
+
+</resources>

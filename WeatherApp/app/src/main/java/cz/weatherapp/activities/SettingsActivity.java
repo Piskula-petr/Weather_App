@@ -23,12 +23,15 @@ public class SettingsActivity extends AppCompatActivity {
 		
 		private AppStorage appStorage;
 		
-		// Kódové zkratky jazyků - [en, cs ...]
+		// Kódové zkratky jazyků - [en, cs, ru, fr, es]
 		private String[] languagesCodes;
 		
 		// Názvy jazyků podle Locale aplikace
-		// en -> [Czech, English]
-		// cz -> [Čeština, Angličtina]
+		// en -> [Czech, English, Russian, French, Spanish]
+		// cz -> [Čeština, Angličtina, Ruština, Francouzština, Španělština]
+		// ru -> [чешский язык, английский, русский, французский язык, испанский язык]
+		// fr -> [tchèque, Anglais, russe, français, Espagnol]
+		// es -> [Checo, Inglés, Ruso, Francés, Español]
 		private String[] languages;
 		
 		// Jazyk aplikace
