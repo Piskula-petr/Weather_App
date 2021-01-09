@@ -1,11 +1,14 @@
 # 7. Weather App
 
-## Work in progress
+<p>
+  <img src="image03.png" width="30%">
+  <img src="image01.png" width="30%">
+  <img src="image02.png" width="30%">
+</p>
 
-<div>
-  <img src="image-main-27-12-20.png" width="49%">
-  <img src="image-settings-27-12-20.png" width="49%">
-</div>
+## Description
+Android application providing weather forecast based on current or selected location <br> <br>
+
 
 ## API Servers
 ClimaCell Weather API <br>
