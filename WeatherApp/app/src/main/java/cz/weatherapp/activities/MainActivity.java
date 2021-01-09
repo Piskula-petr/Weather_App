@@ -203,10 +203,12 @@ public class MainActivity extends AppCompatActivity {
         textViewSunriseLabel.setText(getString(R.string.sunrise) + " :");
         
         TextView textViewSunrise = findViewById(R.id.textViewSunrise);
-        
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("H:mm");
+
         Calendar calendar = Calendar.getInstance();
         calendar = weatherDataCurrent.getSunrise();
-        textViewSunrise.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
+        textViewSunrise.setText(timeFormat.format(calendar.getTime()));
         
         // Západ slunce
         TextView textViewSunsetLabel = findViewById( R.id.textViewSunsetLabel);
@@ -214,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
         
         TextView textViewSunset = findViewById(R.id.textViewSunset);
         calendar = weatherDataCurrent.getSunset();
-        textViewSunset.setText(calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
-    
+        textViewSunset.setText(timeFormat.format(calendar.getTime()));
+
         // Měsíční fáze
         TextView textViewMoonPhaseLabel = findViewById(R.id.textViewMoonPhaseLabel);
         textViewMoonPhaseLabel.setText(getString(R.string.moon_phase) + " :");
