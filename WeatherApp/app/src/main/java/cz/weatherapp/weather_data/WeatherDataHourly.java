@@ -5,20 +5,22 @@ import java.util.Calendar;
 
 public class WeatherDataHourly implements Serializable {
 		
-		private String weatherCode;
+		private int weatherCode;
 		private int temperature;
-		private int precipitation;
+		private int precipitationProbability;
 		private Calendar observationTime;
 		
-// Konstruktor //////////////////////////////////////////////////////////////////////////////////////////////
 		
+		/**
+		 * Konstruktor
+		 */
 		public WeatherDataHourly() {
 		
 		}
 		
 // Settery //////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public void setWeatherCode(String weatherCode) {
+		public void setWeatherCode(int weatherCode) {
 				this.weatherCode = weatherCode;
 		}
 		
@@ -26,17 +28,17 @@ public class WeatherDataHourly implements Serializable {
 				this.temperature = temperature;
 		}
 		
-		public void setPrecipitation(int precipitation) {
-				this.precipitation = precipitation;
+		public void setPrecipitationProbability(int precipitationProbability) {
+				this.precipitationProbability = precipitationProbability;
 		}
 		
 		public void setObservationTime(Calendar observationTime) {
 				this.observationTime = observationTime;
 		}
-		
+
 // Gettery //////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public String getWeatherCode() {
+		public int getWeatherCode() {
 				return weatherCode;
 		}
 		
@@ -44,12 +46,11 @@ public class WeatherDataHourly implements Serializable {
 				return temperature;
 		}
 		
-		public int getPrecipitation() {
-				return precipitation;
+		public int getPrecipitationProbability() {
+				return precipitationProbability;
 		}
 		
 		public Calendar getObservationTime() {
 				return observationTime;
 		}
-		
 }

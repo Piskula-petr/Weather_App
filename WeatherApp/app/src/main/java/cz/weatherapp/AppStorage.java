@@ -25,7 +25,7 @@ public class AppStorage {
 		/**
 		 * Změna jazyka aplikace + uložení nastavení
 		 *
-		 * @param language - jazyk ve dvoumístném tvaru - [en, cs]
+		 * @param language - jazyk ve dvoumístném tvaru - [en, cs, es, fr, ru]
 		 */
 		public void setAndSaveLocale(String language) {
 				
@@ -47,7 +47,7 @@ public class AppStorage {
 		/**
 		 * Získání jazyka aplikace
 		 *
-		 * @return - vrací dvoumístný tvar jazyku - [en, cs]
+		 * @return - vrací dvoumístný tvar jazyku - [en, cs, es, fr, ru]
 		 */
 		public String getLocale() {
 				

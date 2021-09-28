@@ -25,86 +25,86 @@ public class Resources {
 		
 		
 		/**
-		 * Vytvoření Mapy předpovědí počasí - [kódový název, ID popisu]
+		 * Vytvoření Mapy předpovědí počasí - [kód počasí, ID popisu]
 		 *
 		 * @return - vrací Mapu předpovědi počasí
 		 */
-		public Map<String, String> getWeatherPredictions() {
+		public Map<Integer, String> getWeatherPredictions() {
 				
-				Map<String, String> predictions = new HashMap<>();
+				Map<Integer, String> predictions = new HashMap<>();
 				
-				predictions.put("clear", context.getString(R.string.clear));
-				predictions.put("mostly_clear", context.getString(R.string.mostly_clear));
-				predictions.put("partly_cloudy", context.getString(R.string.partly_cloudy));
-				predictions.put("cloudy", context.getString(R.string.cloudy));
-				predictions.put("mostly_cloudy", context.getString(R.string.mostly_cloudy));
-				predictions.put("fog", context.getString(R.string.fog));
-				predictions.put("fog_light", context.getString(R.string.fog_light));
-				predictions.put("drizzle", context.getString(R.string.drizzle));
-				predictions.put("rain_light", context.getString(R.string.rain_light));
-				predictions.put("rain", context.getString(R.string.rain));
-				predictions.put("rain_heavy", context.getString(R.string.rain_heavy));
-				predictions.put("tstorm", context.getString(R.string.tstorm));
-				predictions.put("snow_light", context.getString(R.string.snow_light));
-				predictions.put("snow", context.getString(R.string.snow));
-				predictions.put("flurries", context.getString(R.string.flurries));
-				predictions.put("snow_heavy", context.getString(R.string.snow_heavy));
-				predictions.put("ice_pellets_light", context.getString(R.string.ice_pellets_light));
-				predictions.put("ice_pellets", context.getString(R.string.ice_pellets));
-				predictions.put("ice_pellets_heavy", context.getString(R.string.ice_pellets_heavy));
-				predictions.put("freezing_drizzle", context.getString(R.string.freezing_drizzle));
-				predictions.put("freezing_rain_light", context.getString(R.string.freezing_rain_light));
-				predictions.put("freezing_rain", context.getString(R.string.freezing_rain));
-				predictions.put("freezing_rain_heavy", context.getString(R.string.freezing_rain_heavy));
+				predictions.put(1000, context.getString(R.string.clear));
+				predictions.put(1100, context.getString(R.string.mostly_clear));
+				predictions.put(1101, context.getString(R.string.partly_cloudy));
+				predictions.put(1001, context.getString(R.string.cloudy));
+				predictions.put(1102, context.getString(R.string.mostly_cloudy));
+				predictions.put(2000, context.getString(R.string.fog));
+				predictions.put(2100, context.getString(R.string.fog_light));
+				predictions.put(4000, context.getString(R.string.drizzle));
+				predictions.put(4200, context.getString(R.string.rain_light));
+				predictions.put(4001, context.getString(R.string.rain));
+				predictions.put(4201, context.getString(R.string.rain_heavy));
+				predictions.put(8000, context.getString(R.string.tstorm));
+				predictions.put(5100, context.getString(R.string.snow_light));
+				predictions.put(5000, context.getString(R.string.snow));
+				predictions.put(5001, context.getString(R.string.flurries));
+				predictions.put(5101, context.getString(R.string.snow_heavy));
+				predictions.put(7102, context.getString(R.string.ice_pellets_light));
+				predictions.put(7000, context.getString(R.string.ice_pellets));
+				predictions.put(7101, context.getString(R.string.ice_pellets_heavy));
+				predictions.put(6000, context.getString(R.string.freezing_drizzle));
+				predictions.put(6200, context.getString(R.string.freezing_rain_light));
+				predictions.put(6001, context.getString(R.string.freezing_rain));
+				predictions.put(6201, context.getString(R.string.freezing_rain_heavy));
 				
 				return predictions;
 		}
 		
 		
 		/**
-		 * Vytvoření Mapy obrázků předpovědi počasí - [kódový název, ID popisku]
+		 * Vytvoření Mapy obrázků předpovědi počasí - [kód počasí , ID popisku]
 		 *
 		 * @param isDay - boolean noční / denní obrázky
 		 *
 		 * @return - vrací Mapu obrázků předpovědi počasí
 		 */
-		public Map<String, Integer> getWeatherPredictionsImages(boolean isDay) {
+		public Map<Integer, Integer> getWeatherPredictionsImages(boolean isDay) {
 				
-				Map<String, Integer> images = new HashMap<>();
+				Map<Integer, Integer> images = new HashMap<>();
 				
 				// Denní režim
 				if (isDay) {
-						images.put("clear", R.drawable.clear);
-						images.put("mostly_clear", R.drawable.mostly_clear);
-						images.put("partly_cloudy", R.drawable.partly_cloudy);
+						images.put(1000, R.drawable.clear);
+						images.put(1100, R.drawable.mostly_clear);
+						images.put(1101, R.drawable.partly_cloudy);
 						
 				// Noční režim
 				} else {
-						images.put("clear", R.drawable.clear_night);
-						images.put("mostly_clear", R.drawable.mostly_clear_night);
-						images.put("partly_cloudy", R.drawable.partly_cloudy_night);
+						images.put(1000, R.drawable.clear_night);
+						images.put(1100, R.drawable.mostly_clear_night);
+						images.put(1101, R.drawable.partly_cloudy_night);
 				}
 				
-				images.put("cloudy", R.drawable.cloudy);
-				images.put("mostly_cloudy", R.drawable.mostly_cloudy);
-				images.put("fog", R.drawable.fog);
-				images.put("fog_light", R.drawable.fog_light);
-				images.put("drizzle", R.drawable.drizzle);
-				images.put("rain_light", R.drawable.rain_light);
-				images.put("rain", R.drawable.rain);
-				images.put("rain_heavy", R.drawable.rain_heavy);
-				images.put("tstorm", R.drawable.tstorm);
-				images.put("flurries", R.drawable.flurries);
-				images.put("snow_light", R.drawable.snow_light);
-				images.put("snow", R.drawable.snow);
-				images.put("snow_heavy", R.drawable.snow_heavy);
-				images.put("ice_pellets_light", R.drawable.ice_pellets_light);
-				images.put("ice_pellets", R.drawable.ice_pellets);
-				images.put("ice_pellets_heavy", R.drawable.ice_pellets_heavy);
-				images.put("freezing_drizzle", R.drawable.freezing_drizzle);
-				images.put("freezing_rain_light", R.drawable.freezing_rain_light);
-				images.put("freezing_rain", R.drawable.freezing_rain);
-				images.put("freezing_rain_heavy", R.drawable.freezing_rain_heavy);
+				images.put(1001, R.drawable.cloudy);
+				images.put(1102, R.drawable.mostly_cloudy);
+				images.put(2000, R.drawable.fog);
+				images.put(2100, R.drawable.fog_light);
+				images.put(4000, R.drawable.drizzle);
+				images.put(4200, R.drawable.rain_light);
+				images.put(4001, R.drawable.rain);
+				images.put(4201, R.drawable.rain_heavy);
+				images.put(8000, R.drawable.tstorm);
+				images.put(5001, R.drawable.flurries);
+				images.put(5100, R.drawable.snow_light);
+				images.put(5000, R.drawable.snow);
+				images.put(5101, R.drawable.snow_heavy);
+				images.put(7102, R.drawable.ice_pellets_light);
+				images.put(7000, R.drawable.ice_pellets);
+				images.put(7101, R.drawable.ice_pellets_heavy);
+				images.put(6000, R.drawable.freezing_drizzle);
+				images.put(6200, R.drawable.freezing_rain_light);
+				images.put(6001, R.drawable.freezing_rain);
+				images.put(6201, R.drawable.freezing_rain_heavy);
 				
 				return images;
 		}
@@ -166,22 +166,22 @@ public class Resources {
 		
 		
 		/**
-		 * Vytvoření Mapy obrázků měsíčních fází - [kódový název, ID obrázku]
+		 * Vytvoření Mapy obrázků měsíčních fází - [kód měsíční fáze, ID obrázku]
 		 *
 		 * @return - vrací Mapu obrázků měsíčních fází
 		 */
-		public Map<String, Integer> getMoonPhaseImages() {
+		public Map<Integer, Integer> getMoonPhaseImages() {
 				
-				Map<String, Integer> images = new HashMap<>();
+				Map<Integer, Integer> images = new HashMap<>();
 				
-				images.put("new", R.drawable.moon_phase_new);
-				images.put("waxing_crescent", R.drawable.moon_phase_waxing_crescent);
-				images.put("first_quarter", R.drawable.moon_phase_first_quarter);
-				images.put("waxing_gibbous", R.drawable.moon_phase_waxing_gibbous);
-				images.put("full", R.drawable.moon_phase_full);
-				images.put("waning_gibbous", R.drawable.moon_phase_waning_gibbous);
-				images.put("last_quarter", R.drawable.moon_phase_last_quarter);
-				images.put("waning_crescent", R.drawable.moon_phase_waning_crescent);
+				images.put(0, R.drawable.moon_phase_new);
+				images.put(1, R.drawable.moon_phase_waxing_crescent);
+				images.put(2, R.drawable.moon_phase_first_quarter);
+				images.put(3, R.drawable.moon_phase_waxing_gibbous);
+				images.put(4, R.drawable.moon_phase_full);
+				images.put(5, R.drawable.moon_phase_waning_gibbous);
+				images.put(6, R.drawable.moon_phase_last_quarter);
+				images.put(7, R.drawable.moon_phase_waning_crescent);
 				
 				return  images;
 		}

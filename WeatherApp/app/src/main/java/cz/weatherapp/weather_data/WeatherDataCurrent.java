@@ -5,25 +5,27 @@ import java.util.Calendar;
 
 public class WeatherDataCurrent implements Serializable {
 		
-		private String weatherCode;
+		private int weatherCode;
 		private int temperature;
-		private int feelsLikeTemp;
+		private int feelsLike;
 		private int humidity;
 		private int windSpeed;
 		private int windDirection;
 		private Calendar sunrise;
 		private Calendar sunset;
-		private String moonPhase;
+		private int moonPhase;
 		
-// Konstruktor //////////////////////////////////////////////////////////////////////////////////////////////
 		
+		/**
+		 * Konstruktor
+		 */
 		public WeatherDataCurrent() {
 		
 		}
 		
 // Settery //////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public void setWeatherCode(String weatherCode) {
+		public void setWeatherCode(int weatherCode) {
 				this.weatherCode = weatherCode;
 		}
 		
@@ -31,8 +33,8 @@ public class WeatherDataCurrent implements Serializable {
 				this.temperature = temperature;
 		}
 		
-		public void setFeelsLikeTemp(int feelsLikeTemp) {
-				this.feelsLikeTemp = feelsLikeTemp;
+		public void setFeelsLike(int feelsLike) {
+				this.feelsLike = feelsLike;
 		}
 		
 		public void setHumidity(int humidity) {
@@ -55,13 +57,13 @@ public class WeatherDataCurrent implements Serializable {
 				this.sunset = sunset;
 		}
 		
-		public void setMoonPhase(String moonPhase) {
+		public void setMoonPhase(int moonPhase) {
 				this.moonPhase = moonPhase;
 		}
 		
 // Gettery ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public String getWeatherCode() {
+		public int getWeatherCode() {
 				return weatherCode;
 		}
 		
@@ -69,8 +71,8 @@ public class WeatherDataCurrent implements Serializable {
 				return temperature;
 		}
 		
-		public int getFeelsLikeTemp() {
-				return feelsLikeTemp;
+		public int getFeelsLike() {
+				return feelsLike;
 		}
 		
 		public int getHumidity() {
@@ -93,7 +95,7 @@ public class WeatherDataCurrent implements Serializable {
 				return sunset;
 		}
 		
-		public String getMoonPhase() {
+		public int getMoonPhase() {
 				return moonPhase;
 		}
 		

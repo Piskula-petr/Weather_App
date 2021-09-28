@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
     private List<WeatherDataDaily> weatherDataDailyList = new ArrayList<>();
     
     // Zdroje
-    private Map<String, String> predictions;
-    private Map<String, Integer> images;
-    private Map<String, Integer> moonPhases;
+    private Map<Integer, String> predictions;
+    private Map<Integer, Integer> images;
+    private Map<Integer, Integer> moonPhases;
     
     // Poloha [město, stát]
     private String location;
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         textViewFeelsLikeLabel.setText(getString(R.string.feels_like) + " :");
         
         TextView textViewFeelsLike = findViewById(R.id.textViewFeelsLike);
-        textViewFeelsLike.setText(weatherDataCurrent.getFeelsLikeTemp() + " " + appTemperatureUnit);
+        textViewFeelsLike.setText(weatherDataCurrent.getFeelsLike() + " " + appTemperatureUnit);
         
         // Vlhkost vzduchu
         TextView textViewHumidityLabel = findViewById(R.id.textViewHumidityLabel);
@@ -281,8 +281,8 @@ public class MainActivity extends AppCompatActivity {
             TextView textViewHourlyPrecipitation = new TextView(this);
     
             // Skrytí hodnoty, v případě nuly
-            textViewHourlyPrecipitation.setText((weatherDataHourly.getPrecipitation() != 0
-                ? weatherDataHourly.getPrecipitation() + " %"
+            textViewHourlyPrecipitation.setText((weatherDataHourly.getPrecipitationProbability() != 0
+                ? weatherDataHourly.getPrecipitationProbability() + " %"
                 : ""));
     
             textViewHourlyPrecipitation.setTextColor(ContextCompat.getColor(this, R.color.text));
@@ -321,8 +321,8 @@ public class MainActivity extends AppCompatActivity {
             TextView textViewDailyPrecipitation = findViewById(textViewIDsPrecipitation[i]);
     
             // Skrytí hodnoty, v případě nuly
-            textViewDailyPrecipitation.setText((weatherDataDaily.getPrecipitation() != 0
-                ? weatherDataDaily.getPrecipitation() + " %"
+            textViewDailyPrecipitation.setText((weatherDataDaily.getPrecipitationProbability() != 0
+                ? weatherDataDaily.getPrecipitationProbability() + " %"
                 : ""));
     
             // Obrázek předpovědi

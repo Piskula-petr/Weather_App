@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String", "CLIMACELL_API_KEY", CLIMACELL_API_KEY)
+        buildConfigField("String", "TOMORROW_API_KEY", TOMORROW_API_KEY)
         buildConfigField("String", "GOOGLE_API_KEY", GOOGLE_API_KEY)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

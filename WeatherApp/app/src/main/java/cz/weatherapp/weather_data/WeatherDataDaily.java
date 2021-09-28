@@ -5,21 +5,23 @@ import java.util.Calendar;
 
 public class WeatherDataDaily implements Serializable {
 		
-		private String weatherCode;
+		private int weatherCode;
 		private int temperatureMin;
 		private int temperatureMax;
-		private int precipitation;
+		private int precipitationProbability;
 		private Calendar observationTime;
 		
-// Konstruktor //////////////////////////////////////////////////////////////////////////////////////////////
 		
+		/**
+		 * Konstruktor
+		 */
 		public WeatherDataDaily() {
 		
 		}
 		
 // Settery ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public void setWeatherCode(String weatherCode) {
+		public void setWeatherCode(int weatherCode) {
 				this.weatherCode = weatherCode;
 		}
 		
@@ -31,8 +33,8 @@ public class WeatherDataDaily implements Serializable {
 				this.temperatureMax = temperatureMax;
 		}
 		
-		public void setPrecipitation(int precipitation) {
-				this.precipitation = precipitation;
+		public void setPrecipitationProbability(int precipitationProbability) {
+				this.precipitationProbability = precipitationProbability;
 		}
 		
 		public void setObservationTime(Calendar observationTime) {
@@ -41,7 +43,7 @@ public class WeatherDataDaily implements Serializable {
 
 // Gettery ///////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		public String getWeatherCode() {
+		public int getWeatherCode() {
 				return weatherCode;
 		}
 		
@@ -53,8 +55,8 @@ public class WeatherDataDaily implements Serializable {
 				return temperatureMax;
 		}
 		
-		public int getPrecipitation() {
-				return precipitation;
+		public int getPrecipitationProbability() {
+				return precipitationProbability;
 		}
 		
 		public Calendar getObservationTime() {

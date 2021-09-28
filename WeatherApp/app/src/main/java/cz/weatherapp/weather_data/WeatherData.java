@@ -10,6 +10,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import cz.weatherapp.AppStorage;
@@ -28,7 +31,7 @@ import cz.weatherapp.R;
 
 public class WeatherData {
 		
-		private final String CLIMACELL_API_KEY = BuildConfig.CLIMACELL_API_KEY;
+		private final String TOMORROW_API_KEY = BuildConfig.TOMORROW_API_KEY;
 		
 		private RequestQueue requestQueue;
 		private Context context;
@@ -37,6 +40,8 @@ public class WeatherData {
 		// Aktuální předpověď počasí
 		private WeatherDataCurrent weatherDataCurrent;
 		private boolean isCurrentDataSet = false;
+		private boolean isHourlyDataSourceSet = false;
+		private boolean isDailyDataSourceSet = false;
 		
 		// Hodinová předpověď počasí
 		private List<WeatherDataHourly> weatherDataHourlyList;
@@ -52,14 +57,20 @@ public class WeatherData {
 		// Zeměpisná délka
 		private double longitude;
 		
-		// Systém jednotek
-		private String unitSystem;
+		// Jednotka teploty
+		private String temperatureUnit;
 		
 		// Jednotka rychlosti
 		private String speedUnit;
 		
 		// Režim předpovědi
 		private int forecastMode;
+		
+		// Zdroj dat pro aktuální předpověď počasí
+		enum CurrentDataSource {
+				HOURLY,
+				DAILY
+		}
 		
 		
 		/**
@@ -79,17 +90,15 @@ public class WeatherData {
 				
 				appStorage = new AppStorage(context);
 				
-				// Nastavení systému jednotek
-				switch (appStorage.getTemperatureUnit()) {
-						
-						case "°C": unitSystem = "si"; break;
-						case "°F": unitSystem = "us"; break;
-				}
+				weatherDataCurrent = new WeatherDataCurrent();
+				weatherDataHourlyList = new ArrayList<>();
+				weatherDataDailyList = new ArrayList<>();
+				
+				// Nastavení jednoteky teploty
+				temperatureUnit = appStorage.getTemperatureUnit();
 				
 				// Nastavení jednotky rychlosti
 				speedUnit = appStorage.getSpeedUnit();
-				
-				if (speedUnit.equals("km/h")) speedUnit = "kph";
 				
 				// Nastavení režimu předpovědi
 				forecastMode = appStorage.getForecastMode();
@@ -99,12 +108,10 @@ public class WeatherData {
 		/**
 		 * Odeslání requestů na API server <br><br>
 		 *
-		 *     - aktuální předpověď počasí <br>
 		 *     - hodinová předpověď počasí <br>
 		 *     - denní předpověď počasí <br>
 		 */
 		public void sendRequests() {
-				currentWeatherDataRequest();
 				hourlyWeatherDataRequest();
 				dailyWeatherDataRequest();
 		}
@@ -117,98 +124,76 @@ public class WeatherData {
 		 */
 		public boolean isWeatherDataSet() {
 				
-				if (isCurrentDataSet && isHourlyDataSet && isDailyDataSet) {
-						
-						return true;
-						
-				} else return false;
+				isCurrentDataSet = (isHourlyDataSourceSet && isDailyDataSourceSet ? true : false);
+				
+				return isCurrentDataSet && isHourlyDataSet && isDailyDataSet;
 		}
 		
 		
 		/**
-		 * Odeslání requestu pro aktuální předpověď počasí
+		 * Nastavení aktuální předpovědi počasí
 		 */
-		private void currentWeatherDataRequest() {
+		private void setCurrentWeatherData(CurrentDataSource currentDataSource ,JSONObject values) {
 				
-				String url = "https://api.climacell.co/v3/weather/realtime" +
-						"?lat=" + latitude + "" +
-						"&lon=" + longitude + "" +
-						"&location_id=" + CLIMACELL_API_KEY +
-						"&unit_system=" + unitSystem +
-						"&fields=weather_code%2Ctemp%2Cfeels_like%2Chumidity%2Cwind_speed%3A" + speedUnit + "%2Cwind_direction%2Csunrise%2Csunset%2Cmoon_phase" +
-						"&apikey=" + CLIMACELL_API_KEY;
-				
-				JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-						new Response.Listener<JSONObject>() {
-								
-								@Override
-								public void onResponse(JSONObject response) {
-										
-										try {
-												
-												weatherDataCurrent = new WeatherDataCurrent();
-												
-												// Předpověď
-												JSONObject weatherCode = response.getJSONObject("weather_code");
-												weatherDataCurrent.setWeatherCode(weatherCode.getString("value"));
-												
-												// Teplota
-												JSONObject temp = response.getJSONObject("temp");
-												weatherDataCurrent.setTemperature((int) Math.round(temp.getDouble("value")));
-												
-												// Pocitová teplota
-												JSONObject feelsLike = response.getJSONObject("feels_like");
-												weatherDataCurrent.setFeelsLikeTemp((int) Math.round(feelsLike.getDouble("value")));
-												
-												// Vlhkost vzduchu
-												JSONObject humidity = response.getJSONObject("humidity");
-												weatherDataCurrent.setHumidity((int) Math.round(humidity.getDouble("value")));
-												
-												// Rychlost větru
-												JSONObject windSpeed = response.getJSONObject("wind_speed");
-												weatherDataCurrent.setWindSpeed((int) Math.round(windSpeed.getDouble("value")));
-												
-												// Směr větru
-												JSONObject windDirection = response.getJSONObject("wind_direction");
-												weatherDataCurrent.setWindDirection((int) Math.round(windDirection.getDouble("value")));
-												
-												SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-												
-												// Východ slunce
-												JSONObject sunrise = response.getJSONObject("sunrise");
-												Calendar sunriseCalendar = Calendar.getInstance();
-												sunriseCalendar.setTime(format.parse(sunrise.getString("value").replace("Z", "+0:00")));
-												weatherDataCurrent.setSunrise(sunriseCalendar);
-												
-												// Západ slunce
-												JSONObject sunset = response.getJSONObject("sunset");
-												Calendar sunsetCalendar = Calendar.getInstance();
-												sunsetCalendar.setTime(format.parse(sunset.getString("value").replace("Z", "+0:00")));
-												weatherDataCurrent.setSunset(sunsetCalendar);
-												
-												// Měsíční fáze
-												JSONObject moonPhase = response.getJSONObject("moon_phase");
-												weatherDataCurrent.setMoonPhase(moonPhase.getString("value"));
-												
-												isCurrentDataSet = true;
-												
-										} catch (JSONException | ParseException e) {
-												
-												Toast.makeText(context, R.string.error_current_weather, Toast.LENGTH_LONG).show();
-												e.printStackTrace();
-										}
-								}
-						}, new Response.ErrorListener() {
+				try {
 						
-						@Override
-						public void onErrorResponse(VolleyError error) {
+						switch (currentDataSource) {
 								
-								Toast.makeText(context, R.string.error_server_connection, Toast.LENGTH_LONG).show();
-								error.printStackTrace();
+								case HOURLY:
+										
+										// Předpověď
+										weatherDataCurrent.setWeatherCode(values.getInt("weatherCode"));
+										
+										// Teplota
+										weatherDataCurrent.setTemperature(
+												temperatureConversion(values.getInt("temperature"))
+										);
+										
+										// Pocitová teplota
+										weatherDataCurrent.setFeelsLike(
+												temperatureConversion(values.getInt("temperatureApparent"))
+										);
+										
+										// Vlhkost vzduchu
+										weatherDataCurrent.setHumidity(values.getInt("humidity"));
+										
+										// Rychlost větru
+										weatherDataCurrent.setWindSpeed(
+												windSpeedConversion(values.getInt("windSpeed"))
+										);
+										
+										// Směr větru
+										weatherDataCurrent.setWindDirection(values.getInt("windDirection"));
+										
+										isHourlyDataSourceSet = true;
+										break;
+								
+								case DAILY:
+										
+										SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+										
+										// Východ slunce
+										Calendar sunriseTimeCalendar = Calendar.getInstance();
+										sunriseTimeCalendar.setTime(format.parse(values.getString("sunriseTime")));
+										weatherDataCurrent.setSunrise(sunriseTimeCalendar);
+										
+										// Západ slunce
+										Calendar sunsetTimeCalendar = Calendar.getInstance();
+										sunsetTimeCalendar.setTime(format.parse(values.getString("sunsetTime")));
+										weatherDataCurrent.setSunset(sunsetTimeCalendar);
+										
+										// Měsíční fáze
+										weatherDataCurrent.setMoonPhase(values.getInt("moonPhase"));
+										
+										isDailyDataSourceSet = true;
+										break;
 						}
-				});
-				
-				requestQueue.add(objectRequest);
+						
+				} catch (JSONException | ParseException e) {
+						
+						Toast.makeText(context, R.string.error_current_weather, Toast.LENGTH_LONG).show();
+						e.printStackTrace();
+				}
 		}
 		
 		
@@ -227,8 +212,6 @@ public class WeatherData {
 		 */
 		private void hourlyWeatherDataRequest() {
 				
-				weatherDataHourlyList = new ArrayList<>();
-				
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Z"));
 				
 				// Posun datumu
@@ -242,60 +225,67 @@ public class WeatherData {
 				
 				// Konečné datum
 				String endTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T" + twoDigitsFormatter(hour) + ":00:00Z";
+
+				String url = "https://api.tomorrow.io/v4/timelines" +
+						"?location=" + latitude + "," + longitude +
+						"&fields=temperature,temperatureApparent,humidity,windSpeed,windDirection,precipitationProbability,weatherCode" +
+						"&units=metric" +
+						"&timesteps=1h" +
+						"&endTime=" + endTime +
+						"&timezone=Europe/Prague" +
+						"&apikey=" + TOMORROW_API_KEY;
 				
-				String url = "https://api.climacell.co/v3/weather/forecast/hourly" +
-						"?lat=" + latitude + "" +
-						"&lon=" + longitude + "" +
-						"&location_id=" + CLIMACELL_API_KEY +
-						"&unit_system=" + unitSystem +
-						"&start_time=now" +
-						"&end_time=" + endTime +
-						"&fields=weather_code%2Ctemp%2Cprecipitation_probability" +
-						"&apikey=" + CLIMACELL_API_KEY;
-				
-				JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-						new Response.Listener<JSONArray>() {
+				JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+						new Response.Listener<JSONObject>() {
 								
 								@Override
-								public void onResponse(JSONArray response) {
+								public void onResponse(JSONObject response) {
 										
-										for (int i = 0; i < response.length(); i++) {
+										try {
 												
-												WeatherDataHourly weatherDataHourly = new WeatherDataHourly();
+												JSONObject data = response.getJSONObject("data");
+												JSONObject timelines = data.getJSONArray("timelines").getJSONObject(0);
+												JSONArray intervals = timelines.getJSONArray("intervals");
 												
-												try {
-														JSONObject jsonObject = response.getJSONObject(i);
+												// Aktuální předpověď
+												setCurrentWeatherData(CurrentDataSource.HOURLY, intervals.getJSONObject(0).getJSONObject("values"));
+												
+												// Hodinová předpoveď
+												for (int i = 0; i < intervals.length(); i++) {
 														
-														// Předpověď
-														JSONObject weatherCode = jsonObject.getJSONObject("weather_code");
-														weatherDataHourly.setWeatherCode(weatherCode.getString("value"));
+														WeatherDataHourly weatherDataHourly = new WeatherDataHourly();
 														
-														// Teplota
-														JSONObject temp = jsonObject.getJSONObject("temp");
-														weatherDataHourly.setTemperature((int) Math.round(temp.getDouble("value")));
+														JSONObject interval = intervals.getJSONObject(i);
 														
-														// Pravděpodobnost srážek
-														JSONObject precipitationProbability = jsonObject.getJSONObject("precipitation_probability");
-														weatherDataHourly.setPrecipitation(precipitationProbability.getInt("value"));
-														
-														SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+														SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 														
 														// Čas pozorování
-														JSONObject observationTime = jsonObject.getJSONObject("observation_time");
+														Calendar startTimeCalendar = Calendar.getInstance();
+														startTimeCalendar.setTime(format.parse(interval.getString("startTime")));
+														weatherDataHourly.setObservationTime(startTimeCalendar);
 														
-														Calendar observationTimeCalendar = Calendar.getInstance();
-														observationTimeCalendar.setTime(format.parse(observationTime.getString("value").replace("Z", "+0:00")));
-														weatherDataHourly.setObservationTime(observationTimeCalendar);
+														JSONObject values = interval.getJSONObject("values");
+														
+														// Předpověď
+														weatherDataHourly.setWeatherCode(values.getInt("weatherCode"));
+														
+														// Teplota
+														weatherDataHourly.setTemperature(
+																temperatureConversion(values.getInt("temperature"))
+														);
+														
+														// Pravděpodobnost srážek
+														weatherDataHourly.setPrecipitationProbability(values.getInt("precipitationProbability"));
 														
 														weatherDataHourlyList.add(weatherDataHourly);
-														
-														isHourlyDataSet = true;
-														
-												} catch (JSONException | ParseException e) {
-														
-														Toast.makeText(context, R.string.error_hourly_weather, Toast.LENGTH_LONG).show();
-														e.printStackTrace();
 												}
+												
+												isHourlyDataSet = true;
+												
+										} catch (JSONException | ParseException e) {
+
+												Toast.makeText(context, R.string.error_hourly_weather, Toast.LENGTH_LONG).show();
+												e.printStackTrace();
 										}
 								}
 						}, new Response.ErrorListener() {
@@ -327,8 +317,6 @@ public class WeatherData {
 		 */
 		private void dailyWeatherDataRequest() {
 				
-				weatherDataDailyList = new ArrayList<>();
-				
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Z"));
 				
 				// Zítřejší datum
@@ -351,65 +339,71 @@ public class WeatherData {
 				// Konečné datum
 				String endTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T00:00:00Z";
 				
-				String url = "https://api.climacell.co/v3/weather/forecast/daily" +
-						"?lat=" + latitude +
-						"&lon=" + + longitude +
-						"&location_id=" + CLIMACELL_API_KEY +
-						"&unit_system=" + unitSystem +
-						"&start_time=" + startTime +
-						"&end_time=" + endTime +
-						"&fields=temp%2Cweather_code%2Cprecipitation_probability" +
-						"&apikey=" + CLIMACELL_API_KEY;
+				String url = "https://api.tomorrow.io/v4/timelines" +
+						"?location=" + latitude + "," + longitude + "" +
+						"&fields=temperatureMax,temperatureMin,precipitationProbability,sunriseTime,sunsetTime,moonPhase,weatherCode" +
+						"&units=metric" +
+						"&timesteps=1d" +
+						"&endTime=" + endTime + "" +
+						"&timezone=Europe/Prague" +
+						"&apikey=" + TOMORROW_API_KEY;
 				
-				JsonArrayRequest arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-						new Response.Listener<JSONArray>() {
+				JsonObjectRequest arrayRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+						new Response.Listener<JSONObject>() {
 								
 								@Override
-								public void onResponse(JSONArray response) {
+								public void onResponse(JSONObject response) {
 										
-										for (int i = 0; i < response.length(); i++) {
+										try {
 												
-												WeatherDataDaily weatherDataDaily = new WeatherDataDaily();
+												JSONObject data = response.getJSONObject("data");
+												JSONObject timelines = data.getJSONArray("timelines").getJSONObject(0);
+												JSONArray intervals = timelines.getJSONArray("intervals");
 												
-												try {
+												// Aktuální předpověď
+												setCurrentWeatherData(CurrentDataSource.DAILY, intervals.getJSONObject(0).getJSONObject("values"));
+												
+												// Denní předpověď
+												for (int i = 0; i < intervals.length(); i++) {
 														
-														JSONObject jsonObject = response.getJSONObject(i);
-														JSONArray temp = jsonObject.getJSONArray("temp");
+														WeatherDataDaily weatherDataDaily = new WeatherDataDaily();
 														
-														// Předpověď
-														JSONObject weatherCode = jsonObject.getJSONObject("weather_code");
-														weatherDataDaily.setWeatherCode(weatherCode.getString("value"));
+														JSONObject interval = intervals.getJSONObject(i);
 														
-														// Minimální teplota
-														JSONObject tempMin = temp.getJSONObject(0).getJSONObject("min");
-														weatherDataDaily.setTemperatureMin((int) Math.round(tempMin.getDouble("value")));
-														
-														// Maximální teplota
-														JSONObject tempMax = temp.getJSONObject(1).getJSONObject("max");
-														weatherDataDaily.setTemperatureMax((int) Math.round(tempMax.getDouble("value")));
-														
-														// Pravděpodobnost srážek
-														JSONObject precipitationProbability = jsonObject.getJSONObject("precipitation_probability");
-														weatherDataDaily.setPrecipitation(precipitationProbability.getInt("value"));
-														
-														SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+														SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 														
 														// Den měření
-														JSONObject observationTime = jsonObject.getJSONObject("observation_time");
-														
 														Calendar observationTimeCalendar = Calendar.getInstance();
-														observationTimeCalendar.setTime(format.parse(observationTime.getString("value")));
+														observationTimeCalendar.setTime(format.parse(interval.getString("startTime")));
 														weatherDataDaily.setObservationTime(observationTimeCalendar);
 														
+														JSONObject values = interval.getJSONObject("values");
+														
+														// Předpověď
+														weatherDataDaily.setWeatherCode(values.getInt("weatherCode"));
+														
+														// Maximální teplota
+														weatherDataDaily.setTemperatureMax(
+																temperatureConversion(values.getInt("temperatureMax"))
+														);
+														
+														// Minimální teplota
+														weatherDataDaily.setTemperatureMin(
+																temperatureConversion(values.getInt("temperatureMin"))
+														);
+														
+														// Pravděpodobnost srážek
+														weatherDataDaily.setPrecipitationProbability(values.getInt("precipitationProbability"));
+														
 														weatherDataDailyList.add(weatherDataDaily);
-														
-														isDailyDataSet = true;
-														
-												} catch (JSONException | ParseException e) {
-														
-														Toast.makeText(context, R.string.error_daily_weather, Toast.LENGTH_LONG).show();
-														e.printStackTrace();
 												}
+												
+												isDailyDataSet = true;
+												
+										} catch (JSONException | ParseException e) {
+												
+												Toast.makeText(context, R.string.error_daily_weather, Toast.LENGTH_LONG).show();
+												e.printStackTrace();
 										}
 								}
 						}, new Response.ErrorListener() {
@@ -451,5 +445,40 @@ public class WeatherData {
 				
 				return twoDigits;
 		}
+		
+		
+		/**
+		 * Přepočet teploty (výchozí jednotka °C)
+		 *
+		 * @param temperature - teploty
+		 *
+		 * @return - vrací upravenou teplotu
+		 */
+		private int temperatureConversion(int temperature) {
 
+				if (temperatureUnit.equals("°F")){
+						
+						temperature = (int) (temperature * 1.8) + 32;
+				}
+				
+				return  temperature;
+		}
+		
+		
+		/**
+		 * Přepočet rychlosti větru (výchotí jednotka m/s)
+		 *
+		 * @param windSpeed - rychlost větru
+		 *
+		 * @return - vrací upravenou rychlost větru
+		 */
+		private int windSpeedConversion(int windSpeed) {
+				
+				if (speedUnit.equals("km/h")) windSpeed = (int) (windSpeed * 3.6);
+				
+				else if (speedUnit.equals("mph")) windSpeed = (int) (windSpeed / 0.44704);
+				
+				return windSpeed;
+		}
+		
 }
