@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -319,18 +320,12 @@ public class WeatherData {
 				
 				Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Z"));
 				
-				// Zítřejší datum
-				calendar.add(Calendar.DAY_OF_MONTH, 1);
-				
 				int year = calendar.get(Calendar.YEAR);
 				int month = calendar.get(Calendar.MONTH) + 1;
 				int day = calendar.get(Calendar.DAY_OF_MONTH);
-				
-				// Počáteční datum
-				String startTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T00:00:00Z";
-				
-				// Posun o 3 dny
-				calendar.add(Calendar.DAY_OF_MONTH, 3);
+
+				// Posun o 4 dny
+				calendar.add(Calendar.DAY_OF_MONTH, 4);
 				
 				year = calendar.get(Calendar.YEAR);
 				month = calendar.get(Calendar.MONTH) + 1;
@@ -340,11 +335,11 @@ public class WeatherData {
 				String endTime = year + "-" + twoDigitsFormatter(month) + "-" + twoDigitsFormatter(day) + "T00:00:00Z";
 				
 				String url = "https://api.tomorrow.io/v4/timelines" +
-						"?location=" + latitude + "," + longitude + "" +
+						"?location=" + latitude + "," + longitude +
 						"&fields=temperatureMax,temperatureMin,precipitationProbability,sunriseTime,sunsetTime,moonPhase,weatherCode" +
 						"&units=metric" +
 						"&timesteps=1d" +
-						"&endTime=" + endTime + "" +
+						"&endTime=" + endTime +
 						"&timezone=Europe/Prague" +
 						"&apikey=" + TOMORROW_API_KEY;
 				
@@ -362,7 +357,7 @@ public class WeatherData {
 												
 												// Aktuální předpověď
 												setCurrentWeatherData(CurrentDataSource.DAILY, intervals.getJSONObject(0).getJSONObject("values"));
-												
+
 												// Denní předpověď
 												for (int i = 0; i < intervals.length(); i++) {
 														
@@ -376,7 +371,7 @@ public class WeatherData {
 														Calendar observationTimeCalendar = Calendar.getInstance();
 														observationTimeCalendar.setTime(format.parse(interval.getString("startTime")));
 														weatherDataDaily.setObservationTime(observationTimeCalendar);
-														
+
 														JSONObject values = interval.getJSONObject("values");
 														
 														// Předpověď
